@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- ____ strings -->
+
+	<string name="app_name">Page 1</string>
+	<string name="ek_img_content">ExportKit Image</string>
+	<string name="______string"></string>
+	<string name="_______string"></string>
+	<string name="email_string">Email</string>
+	<string name="_____string"></string>
+</resources>

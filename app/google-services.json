@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "866229745257",
+    "firebase_url": "https://applicationx5-default-rtdb.firebaseio.com",
+    "project_id": "applicationx5",
+    "storage_bucket": "applicationx5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866229745257:android:ef1727adb37ec97da7d4f8",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866229745257-toc1k2un9gijiujttcep12thob0ugcvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzeI3jqb2M9XAPEcu6xG9XTm5IsQtFITI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866229745257-toc1k2un9gijiujttcep12thob0ugcvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
