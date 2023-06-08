@@ -8,24 +8,24 @@
 
     <Button
         android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
+        android:layout_width="235dp"
+        android:layout_height="107dp"
         android:background="@drawable/roundedbuttongreen"
         android:backgroundTint="@color/green"
         android:text="Добавить"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+        app:layout_constraintTop_toBottomOf="@+id/addPhoto" />
 
     <EditText
         android:id="@+id/barcodeEditText"
         android:layout_width="320dp"
         android:layout_height="55dp"
         android:layout_marginTop="72dp"
-        android:ems="10"
         android:background="@drawable/roundedbuttongrey"
         android:backgroundTint="@color/grey"
+        android:ems="10"
         android:hint="Штрих-код"
         android:inputType="text"
         android:minHeight="48dp"
@@ -49,5 +49,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.251" />
+
+    <Button
+        android:id="@+id/addPhoto"
+        android:layout_width="160dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/roundedbuttongreen"
+        android:backgroundTint="@color/red"
+        android:text="фотография"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

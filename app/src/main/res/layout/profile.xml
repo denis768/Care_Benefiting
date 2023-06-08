@@ -10,7 +10,7 @@
         android:id="@+id/addProfile"
         android:layout_width="357dp"
         android:layout_height="81dp"
-        android:layout_marginBottom="620dp"
+        android:layout_marginBottom="504dp"
         android:background="@drawable/roundedbuttongreen"
         android:backgroundTint="@color/green"
         android:text="Привязать профиль VK"
@@ -19,7 +19,6 @@
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -36,19 +35,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/backBtn"
+    <ImageView
+        android:id="@+id/profilePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/grey"
-        android:background="@drawable/roundedbuttongrey"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="4dp"
-        android:textColor="@color/white"
-        android:textSize="23sp"
-        android:textStyle="normal"
-        android:text="Назад"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/Name"
+        android:layout_width="207dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="80dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.266"
+        app:layout_constraintStart_toEndOf="@+id/profilePhoto"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

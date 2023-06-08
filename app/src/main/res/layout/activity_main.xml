@@ -1,86 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@android:style/Theme.Black.NoTitleBar"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/Content"
-        android:layout_width="364dp"
-        android:layout_height="395dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/grey"
-        android:background="@drawable/roundedbuttongrey"
-        android:hint="*описание отсканированного продукта"
-        android:textColor="@color/black"
-        android:textColorHint="#757575"
-        android:textSize="26dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.937" />
-
-    <Button
-        android:id="@+id/AddBtn"
-        android:layout_width="139dp"
-        android:layout_height="79dp"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/roundedbuttonred"
-        android:backgroundTint="@color/red"
-        android:text="Добавить"
-        android:textColor="@color/white"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/Content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Scan"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/Format"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="messageFormat"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.099" />
-
-    <Button
-        android:id="@+id/Scan"
-        android:layout_width="266dp"
-        android:layout_height="106dp"
-        android:background="@drawable/roundedbuttongreen"
-        android:backgroundTint="@color/green"
-        android:text="Сканировать"
-        android:textColor="@color/white"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.185" />
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="34dp"
         android:layout_marginTop="16dp"
         android:text="Главная"
         android:textColor="@color/black"
@@ -95,13 +24,103 @@
         android:id="@+id/imageBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="21dp"
         android:background="@drawable/circle_button"
+        android:contentDescription="Профиль пользователя"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.018"/>
-<!--        android:src="@mipmap/image" />-->
+        app:layout_constraintVertical_bias="0.018" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/my_nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="801dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="90dp">
+<!--        android:nestedScrollingEnabled="false">-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Content"
+                android:layout_width="358dp"
+                android:layout_height="594dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/roundedbuttongrey"
+                android:backgroundTint="@color/grey"
+                android:hint="*описание отсканированного продукта"
+                android:textColor="@color/black"
+                android:textColorHint="#757575"
+                android:textSize="26sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.428"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.937" />
+
+            <Button
+                android:id="@+id/AddBtn"
+                android:layout_width="139dp"
+                android:layout_height="79dp"
+                android:layout_marginTop="52dp"
+                android:background="@drawable/roundedbuttonred"
+                android:backgroundTint="@color/red"
+                android:text="Добавить"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/Content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Scan"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/Format"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="messageFormat"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.514"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.099" />
+
+            <Button
+                android:id="@+id/Scan"
+                android:layout_width="266dp"
+                android:layout_height="106dp"
+                android:background="@drawable/roundedbuttongreen"
+                android:backgroundTint="@color/green"
+                android:text="Сканировать"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.185" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

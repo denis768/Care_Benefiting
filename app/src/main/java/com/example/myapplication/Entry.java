@@ -6,16 +6,17 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.auth.VKAccessToken;
 import com.vk.api.sdk.auth.VKAuthCallback;
 import com.vk.api.sdk.auth.VKScope;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Arrays;
 
 public class Entry extends Activity {
+    private long userId;
     Button logIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class Entry extends Activity {
         VKAuthCallback callback = new VKAuthCallback() {
             @Override
             public void onLogin(VKAccessToken token) {
+                String userId = String.valueOf(token.getUserId());
                 Toast.makeText(Entry.this, "Login success", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Entry.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -57,5 +59,9 @@ public class Entry extends Activity {
         if (data == null || !VK.onActivityResult(requestCode, resultCode, data, callback)) {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    public long getUserId() {
+        return userId;
     }
 }

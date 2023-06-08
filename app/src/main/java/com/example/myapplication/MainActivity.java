@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,16 +9,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.widget.NestedScrollView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class MainActivity extends Activity implements View.OnClickListener {
-    static Button AddBtn;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    Button AddBtn;
     public String text;
     Button scanBtn;
     ImageButton imageBtn;
     TextView messageText, messageFormat;
+    NestedScrollView nestedScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         messageFormat = findViewById(R.id.Format);
         AddBtn = findViewById(R.id.AddBtn);
         imageBtn = findViewById(R.id.imageBtn);
+        nestedScrollView = findViewById(R.id.my_nested_scroll_view);
+
+        ViewCompat.setNestedScrollingEnabled(nestedScrollView, false);
 
         scanBtn.setOnClickListener(this);
         AddBtn.setOnClickListener(v -> {
@@ -72,11 +78,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         String rating = Data.products.get(Long.parseLong(text));
         if (rating != null) {
             AddBtn.setVisibility(View.INVISIBLE);
+            messageText.setVisibility(View.VISIBLE);
             messageText.setText(rating);
             Toast.makeText(this, "Товар найден, смотрите описание", Toast.LENGTH_LONG).show();
         } else {
             AddBtn.setVisibility(View.VISIBLE);
+            messageText.setVisibility(View.INVISIBLE);
             messageText.setText(null);
+            nestedScrollView.setNestedScrollingEnabled(false);
             Toast.makeText(this, "Товар не найден вы можете его добавить", Toast.LENGTH_LONG).show();
         }
     }
