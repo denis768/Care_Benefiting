@@ -36,6 +36,8 @@ public class AddBarcode extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_barcode);
 
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         barcodeEditText = (EditText) findViewById(R.id.barcodeEditText);
         addPhoto = (Button) findViewById(R.id.addPhoto);
         addButton = (Button) findViewById(R.id.addButton);
@@ -43,16 +45,19 @@ public class AddBarcode extends AppCompatActivity {
         barcodeEditText.setText(getIntent().getStringExtra("barcode"));
 
         addButton.setOnClickListener(v -> {
-            Data data = new Data();
-            // Получаем введенные значения штрих-кода и качества
-            long barcode = Long.parseLong(barcodeEditText.getText().toString());
-            float rating = ratingBar.getRating();
+            long barcode = 0;
+            float rating = 0;
+            barcode = Long.parseLong(barcodeEditText.getText().toString());
+            rating = ratingBar.getRating();
 
-            // Добавляем элемент в TreeMap
-            data.addProduct(barcode, rating, AddBarcode.this);
+            // Добавляем элемент в DB
+            Data data = new Data(barcode, rating, AddBarcode.this);
+            data.saveProduct();
 
             // Выводим сообщение об успешном добавлении
             Toast.makeText(AddBarcode.this, "Штрих-код успешно добавлен!", Toast.LENGTH_SHORT).show();
+            Data.addUser(3);
+            Data.addPoints(3);
 
             // Очищаем поля ввода
             barcodeEditText.setText("");
@@ -87,7 +92,7 @@ public class AddBarcode extends AppCompatActivity {
 
     // Создание временного файла для хранения изображения
     private File createImageFile() throws IOException {
-        // Создаем уникальное имя файла на основе даты и времени
+        // Созлаётся имя файла на основе даты и времени
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -108,9 +113,9 @@ public class AddBarcode extends AppCompatActivity {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             // Картинка сохранилась в файле currentPhotoPath
-            // Используйте это место для загрузки изображения в Firebase Storage
             File imageFile = new File(currentPhotoPath);
             Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            Data.uploadImage(imageBitmap);
         }
     }
 }

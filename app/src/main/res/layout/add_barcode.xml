@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".AddBarcode">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/addButton"
-        android:layout_width="235dp"
-        android:layout_height="107dp"
-        android:background="@drawable/roundedbuttongreen"
+        android:layout_width="270dp"
+        android:layout_height="110dp"
         android:backgroundTint="@color/green"
+        app:cornerRadius="50dp"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:strokeWidth="0dp"
         android:text="Добавить"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,13 +54,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.251" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/addPhoto"
         android:layout_width="160dp"
         android:layout_height="57dp"
         android:layout_marginTop="104dp"
-        android:background="@drawable/roundedbuttongreen"
         android:backgroundTint="@color/red"
+        app:cornerRadius="50dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:text="фотография"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

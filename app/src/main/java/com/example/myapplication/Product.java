@@ -1,22 +1,23 @@
 package com.example.myapplication;
 
 public class Product {
-    private long barcode;
-    private float rating;
+    private String barcode;
+    private String rating;
 
-    public long getBarcode() {
+    public Product() {}
+
+    public Product(String barcode, String rating) {
+        this.barcode = barcode;
+        this.rating = rating;
+    }
+
+    public String getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(long barcode) {
-        this.barcode = barcode;
-    }
+    public void setBarcode(String barcode) {this.barcode = barcode;}
 
-    public float getRating() {
-        return rating;
-    }
+    public String getRating() {return rating;}
 
-    public void setQuantity(String quantity) {
-        this.rating = rating;
-    }
+    public void setRating(String rating) {this.rating = rating;}
 }

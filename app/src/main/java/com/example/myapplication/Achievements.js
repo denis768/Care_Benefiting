@@ -26,5 +26,5 @@ async function addAchievement(userId, achievementId, title, description, iconId,
   }
 }
 
-addAchievement(123, 1, 'Покупатеkm Pro', 'Выдаётся за 50 экологичных покупок', 1, 'points', 100);
-addAchievement(123, 1, 'Покупатеkm Pro Max', 'Выдаётся за 150 экологичных покупок', 1, 'points', 100);
+addAchievement(123, 1, 'Покупатель Pro', 'Выдаётся за 50 экологичных покупок', 1, 'points', 100);
+addAchievement(123, 1, 'Покупатель Pro Max', 'Выдаётся за 150 экологичных покупок', 1, 'points', 100);

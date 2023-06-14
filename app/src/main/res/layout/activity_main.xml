@@ -4,38 +4,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="16dp"
-        android:text="Главная"
-        android:textColor="@color/black"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.198"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/imageBtn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="21dp"
-        android:background="@drawable/circle_button"
-        android:contentDescription="Профиль пользователя"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.018" />
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/white"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/toolbar_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:src="@drawable/logo" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="Главная"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/imageBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/circle_button"
+            app:strokeWidth="0dp"
+            android:src="@drawable/image"
+            android:scaleType="centerCrop"
+            android:backgroundTint="@color/white"
+            app:backgroundTintMode="src_over"
+            android:contentDescription="Профиль пользователя" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/my_nested_scroll_view"
@@ -51,7 +75,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/Content"
                 android:layout_width="358dp"
                 android:layout_height="594dp"
@@ -72,25 +96,27 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.937" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/AddBtn"
                 android:layout_width="139dp"
                 android:layout_height="79dp"
                 android:layout_marginTop="52dp"
-                android:background="@drawable/roundedbuttonred"
                 android:backgroundTint="@color/red"
+                app:cornerRadius="50dp"
                 android:text="Добавить"
                 android:textColor="@color/white"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 android:visibility="invisible"
+                app:rippleColor="@color/red"
+                app:strokeWidth="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/Content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Scan"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/Format"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,16 +130,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.099" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/Scan"
-                android:layout_width="266dp"
-                android:layout_height="106dp"
-                android:background="@drawable/roundedbuttongreen"
-                android:backgroundTint="@color/green"
+                android:layout_width="270dp"
+                android:layout_height="110dp"
                 android:text="Сканировать"
+                android:backgroundTint="@color/green"
                 android:textColor="@color/white"
                 android:textSize="26sp"
                 android:textStyle="bold"
+                app:cornerRadius="50dp"
+                app:rippleColor="@color/green"
+                app:strokeWidth="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
