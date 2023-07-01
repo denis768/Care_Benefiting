@@ -6,55 +6,98 @@
     android:layout_height="match_parent"
     tools:context=".Profile">
 
-    <Button
-        android:id="@+id/addProfile"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/white"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/toolbar_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:src="@drawable/logo" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:text="Профиль"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/help"
         android:layout_width="357dp"
         android:layout_height="81dp"
-        android:layout_marginBottom="504dp"
-        android:background="@drawable/roundedbuttongreen"
         android:backgroundTint="@color/green"
-        android:text="Привязать профиль VK"
+        android:text="Помощь"
         android:textColor="@color/white"
-        android:textSize="23sp"
+        android:textSize="26sp"
         android:textStyle="normal"
+        app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Профиль"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profilePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:layout_marginTop="80dp"
+        android:background="@drawable/circle_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@drawable/profile" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/Name"
-        android:layout_width="207dp"
-        android:layout_height="59dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:text="TextView"
+        android:text="Имя Фамилия"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.266"
         app:layout_constraintStart_toEndOf="@+id/profilePhoto"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/balance_points"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        android:text="Ваш баланс баллов:"
+        app:layout_constraintBottom_toTopOf="@+id/help"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profilePhoto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,8 +19,9 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Toolbar toolbar;
     Button AddBtn;
     public String text;
     Button scanBtn;
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageBtn = findViewById(R.id.imageBtn);
         nestedScrollView = findViewById(R.id.my_nested_scroll_view);
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         ViewCompat.setNestedScrollingEnabled(nestedScrollView, false);
         AddBtn.setVisibility(View.INVISIBLE);
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, AddBarcode.class);
             intent.putExtra("barcode", messageFormat.getText().toString());
             startActivity(intent);
+            AddBtn.setVisibility(View.INVISIBLE);
         });
         imageBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, Profile.class);
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null && data.getExtras() != null) {
             long barcode = 0;
-            Float rating = null;
+            Float rating = (float) 0;
 
             IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (intentResult != null) {
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
 
-            Data dataObj = new Data(barcode, null, this);
+            Data dataObj = new Data(barcode, rating, MainActivity.this);
             Product product = dataObj.findProduct();
             if (product != null) {
                 rating = Float.valueOf(product.getRating());
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 messageText.setVisibility(View.INVISIBLE);
                 messageText.setText(null);
                 nestedScrollView.setNestedScrollingEnabled(false);
-                Toast.makeText(this, "Товар не найден", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Товар не найден, Вы можете его добавить", Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(getBaseContext(), "Не удалось получить данные", Toast.LENGTH_SHORT).show();

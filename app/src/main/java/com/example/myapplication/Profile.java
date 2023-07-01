@@ -1,7 +1,12 @@
 package com.example.myapplication;
 
+import static android.content.ContentValues.TAG;
+import static com.example.myapplication.Data.database;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.VKApiCallback;
 import com.vk.api.sdk.requests.VKRequest;
@@ -20,9 +29,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Profile extends AppCompatActivity {
-    static Long userId = EntryVK.getUserId();
-    TextView profile;
-    Button addProfile;
+    public long userId;
+    SharedPreferences sharedPreferences;
+    TextView profile, balance_points, name;
+    Button help;
 
     private JSONObject userObject;
     private String photoUrl;
@@ -32,10 +42,21 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        profile = findViewById(R.id.profile);
-        addProfile = findViewById(R.id.addProfile);
+        sharedPreferences = getSharedPreferences("myprefs", MODE_PRIVATE);
+        userId = sharedPreferences.getLong("vk_id", 0);
 
-        if (userId != null) {
+        profile = findViewById(R.id.profile);
+        help = findViewById(R.id.help);
+        balance_points = findViewById(R.id.balance_points);
+        name = findViewById(R.id.Name);
+
+        help.setOnClickListener(v -> {
+            Intent intent = new Intent(this, Help.class);
+            startActivity(intent);
+        });
+
+
+        if (userId != 0) {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("user_ids", userId);
@@ -44,7 +65,23 @@ public class Profile extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            VKRequest request = new VKRequest("users.get", "jsonObject");
+            DatabaseReference userRef = database.getReference("applicationx5/users/" + userId + "/points");
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        int points = dataSnapshot.getValue(Integer.class);
+                        balance_points.setText("Ваш баланс баллов: " + points);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e(TAG, "Failed to read user points", databaseError.toException());
+                }
+            });
+
+            VKRequest<JSONObject> request = new VKRequest<>("users.get", "jsonObject");
 
             VK.execute(request, new VKApiCallback<JSONObject>() {
                 @Override
@@ -53,6 +90,7 @@ public class Profile extends AppCompatActivity {
 
                 @Override
                 public void success(JSONObject response) {
+                    Log.d("VKResponse", response.toString());
                     try {
                         JSONArray jsonArray = response.getJSONArray("response");
                         if (jsonArray.length() > 0) {
@@ -65,6 +103,7 @@ public class Profile extends AppCompatActivity {
                     }
                 }
             });
+
         } else {
             Toast.makeText(this, "Извините, но вы не авторизованы", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(Profile.this, EntryVK.class);

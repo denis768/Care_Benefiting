@@ -1,14 +1,21 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.auth.VKAccessToken;
 import com.vk.api.sdk.auth.VKAuthCallback;
@@ -17,30 +24,45 @@ import com.vk.api.sdk.auth.VKScope;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class EntryVK extends AppCompatActivity {
-    public static Long userId;
-    private Toolbar toolbar;
-
+    public static Long userId = 0L;
+    SharedPreferences sharedPreferences;
     Button logIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (VK.isLoggedIn()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-            return;
-        }
+        sharedPreferences = getSharedPreferences("myprefs", MODE_PRIVATE);
+        userId = sharedPreferences.getLong("vk_id", 0);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference("applicationx5/users/" + userId);
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    if (VK.isLoggedIn() && userId != 0) {
+                        Intent intent = new Intent(EntryVK.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
         setContentView(R.layout.entry);
-        logIn = (Button) findViewById(R.id.logIn);
-        toolbar = findViewById(R.id.toolbar);
+        logIn = findViewById(R.id.logIn);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         logIn.setBackgroundColor(Color.RED);
 
         logIn.setOnClickListener(view -> {
@@ -55,25 +77,25 @@ public class EntryVK extends AppCompatActivity {
             @Override
             public void onLogin(VKAccessToken token) {
                 userId = (long) token.getUserId();
-                Toast.makeText(EntryVK.this, "Login success", Toast.LENGTH_SHORT).show();
-                Data.addPoints(1);
-                Data.addUser(1);
+                sharedPreferences.edit().putLong("vk_id", userId).apply();
+                Toast.makeText(EntryVK.this, "Вы успешно вошли", Toast.LENGTH_SHORT).show();
+                if (userId != 0) {
+                    Data.addPoints(1, "За авторизацию");
+                    Data.addUser(1);
+                }
                 Intent intent = new Intent(EntryVK.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
+
             @Override
             public void onLoginFailed(int errorCode) {
-                Toast.makeText(EntryVK.this, "Login fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EntryVK.this, "Возникла ошибка", Toast.LENGTH_SHORT).show();
             }
         };
 
         if (data == null || !VK.onActivityResult(requestCode, resultCode, data, callback)) {
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    public static Long getUserId() {
-        return userId;
     }
 }

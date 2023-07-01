@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@android:style/Theme.Black.NoTitleBar"
-    tools:context=".EntryVK">
+    tools:context=".Help">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,6 +19,8 @@
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
         app:contentInsetStart="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -39,30 +41,40 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
             android:gravity="center"
-            android:text="Вход"
+            android:text="Помощь"
             android:textColor="@color/black"
             android:textSize="26sp"
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logIn"
-        android:layout_width="289dp"
-        android:layout_height="112dp"
-        android:gravity="center"
-        android:text="Войти с VKid"
-        android:textColor="@color/white"
-        android:textSize="26sp"
-        android:textStyle="normal"
-        app:cornerRadius="50dp"
-        app:backgroundTint="@color/red"
-        app:rippleColor="@color/red"
-        app:strokeWidth="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/help_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
