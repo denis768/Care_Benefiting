@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.feature.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,17 +9,25 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 
+import com.example.myapplication.R;
+import com.example.myapplication.data.Data;
+import com.example.myapplication.data.barcode.Barcode;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button AddBtn;
@@ -72,9 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (data != null && data.getExtras() != null) {
             long barcode = 0;
-            Float rating = (float) 0;
+            final float[] rating = {0};
 
             IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (intentResult != null) {
@@ -84,8 +93,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     messageFormat.setVisibility(View.VISIBLE);
                     messageFormat.setText(intentResult.getContents());
                     String textView = messageFormat.getText().toString();
-                    if (!TextUtils.isEmpty(textView)) { // проверяем, что текстовое значение не пустое
-                        barcode = Long.parseLong(textView);
+                    if (!TextUtils.isEmpty(textView)) {
+                        try {
+                            barcode = Long.parseLong(textView);
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(this, "Некорректный штрих-код", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                     } else {
                         Toast.makeText(this, "Некорректный штрих-код", Toast.LENGTH_LONG).show();
                         return;
@@ -96,29 +110,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
 
-            Data dataObj = new Data(barcode, rating, MainActivity.this);
-            Product product = dataObj.findProduct();
-            if (product != null) {
-                rating = Float.valueOf(product.getRating());
-                if (rating != null) {
-                    AddBtn.setVisibility(View.INVISIBLE);
-                    messageText.setVisibility(View.VISIBLE);
-                    messageText.setText(rating.toString());
-                    Toast.makeText(this, "Товар найден, смотрите описание", Toast.LENGTH_LONG).show();
-                } else {
-                    AddBtn.setVisibility(View.VISIBLE);
-                    messageText.setVisibility(View.INVISIBLE);
-                    messageText.setText(null);
-                    nestedScrollView.setNestedScrollingEnabled(false);
-                    Toast.makeText(this, "Товар найден, но оценки нет", Toast.LENGTH_LONG).show();
+            Data.findProduct(barcode, new Callback<Barcode>() {
+                @Override
+                public void onResponse(@NonNull Call<Barcode> call, @NonNull Response<Barcode> response) {
+                    Barcode product = response.body();
+                    if (product != null) {
+                        float rating = product.getRating();
+                        if (rating != 0) {
+                            AddBtn.setVisibility(View.INVISIBLE);
+                            messageText.setVisibility(View.VISIBLE);
+                            messageText.setText(Float.toString(rating));
+                            Toast.makeText(getApplicationContext(), "Товар найден, смотрите описание", Toast.LENGTH_LONG).show();
+                        } else {
+                            AddBtn.setVisibility(View.VISIBLE);
+                            messageText.setVisibility(View.INVISIBLE);
+                            messageText.setText(null);
+                            nestedScrollView.setNestedScrollingEnabled(false);
+                            Toast.makeText(getApplicationContext(), "Товар найден, но оценки нет", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        AddBtn.setVisibility(View.VISIBLE);
+                        messageText.setVisibility(View.INVISIBLE);
+                        messageText.setText(null);
+                        nestedScrollView.setNestedScrollingEnabled(false);
+                        Toast.makeText(getApplicationContext(), "Товар не найден, Вы можете его добавить", Toast.LENGTH_LONG).show();
+                    }
                 }
-            } else {
-                AddBtn.setVisibility(View.VISIBLE);
-                messageText.setVisibility(View.INVISIBLE);
-                messageText.setText(null);
-                nestedScrollView.setNestedScrollingEnabled(false);
-                Toast.makeText(this, "Товар не найден, Вы можете его добавить", Toast.LENGTH_LONG).show();
-            }
+
+                @Override
+                public void onFailure(@NonNull Call<Barcode> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Ошибка во время запроса", Toast.LENGTH_LONG).show();
+                }
+            });
         } else {
             Toast.makeText(getBaseContext(), "Не удалось получить данные", Toast.LENGTH_SHORT).show();
         }

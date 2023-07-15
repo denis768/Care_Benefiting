@@ -1,7 +1,4 @@
-package com.example.myapplication;
-
-import static android.content.ContentValues.TAG;
-import static com.example.myapplication.Data.database;
+package com.example.myapplication.feature.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,10 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+import com.example.myapplication.R;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.VKApiCallback;
 import com.vk.api.sdk.requests.VKRequest;
@@ -64,22 +58,6 @@ public class Profile extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            DatabaseReference userRef = database.getReference("applicationx5/users/" + userId + "/points");
-            userRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        int points = dataSnapshot.getValue(Integer.class);
-                        balance_points.setText("Ваш баланс баллов: " + points);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e(TAG, "Failed to read user points", databaseError.toException());
-                }
-            });
 
             VKRequest<JSONObject> request = new VKRequest<>("users.get", "jsonObject");
 

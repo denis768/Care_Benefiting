@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.feature.ui;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+
+import com.example.myapplication.R;
 
 import java.io.IOException;
 import java.io.InputStream;
